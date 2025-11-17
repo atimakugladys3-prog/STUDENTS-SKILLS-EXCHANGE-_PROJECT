@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muni University - Student Skills Exchange</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="login-container">
+                <div class="logo-section">
+                    <img src="images/logo.png" alt="Muni University Logo" class="logo">
+                    <h2>Muni University</h2>
+                    <p>Student Skills Exchange</p>
+                </div>
+                <form id="loginForm" class="login-form">
+                    <h3>Login to Your Account</h3>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                    <p class="register-link">Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+                </form>
+
+                <form id="registerForm" class="login-form hidden">
+                    <h3>Create Account</h3>
+                    <div class="form-group">
+                        <label for="regName">Full Name:</label>
+                        <input type="text" id="regName" name="regName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email:</label>
+                        <input type="email" id="regEmail" name="regEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password:</label>
+                        <input type="password" id="regPassword" name="regPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regCourse">Course/Program:</label>
+                        <input type="text" id="regCourse" name="regCourse" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Register</button>
+                    <p class="register-link">Already have an account? <a href="#" id="showLogin">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (hidden until login) -->
+    <div id="mainApp" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="logo-nav">
+                    <img src="images/logo.png" alt="Muni University" class="header-logo">
+                    <h1>MUNI UNIVERSITY - STUDENTS SKILLS EXCHANGE</h1>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">HOME</a>
+                    <a href="#browse" class="nav-link">BROWSE SKILLS</a>
+                    <a href="#profile" class="nav-link">MY PROFILE</a>
+                    <a href="#about" class="nav-link">ABOUT</a>
+                    <button id="logoutBtn" class="btn-secondary">LOGOUT</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <div class="hero">
+                    <h2>EXCHANGE SKILLS. BUILD CONNECTIONS.</h2>
+                    <p>Connect with fellow students to share knowledge and skills</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <h3>50+</h3>
+                            <p>STUDENTS CONNECTED</p>
+                        </div>
+                        <div class="stat">
+                            <h3>12+</h3>
+                            <p>SKILLS SHARED</p>
+                        </div>
+                        <div class="stat">
+                            <h3>100%</h3>
+                            <p>FREE SERVICE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="showSection('browse')">
+                        <i class="fas fa-search"></i>
+                        BROWSE SKILLS
+                    </button>
+                    <button class="action-btn" onclick="showSection('profile')">
+                        <i class="fas fa-user-plus"></i>
+                        CREATE PROFILE
+                    </button>
+                </div>
+            </section>
+
+            <!-- Browse Skills Section -->
+            <section id="browse" class="section">
+                <div class="section-header">
+                    <h2>Browse Student Skills</h2>
+                    <div class="filters">
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <option value="tutoring">Tutoring</option>
+                            <option value="tech">Tech Support</option>
+                            <option value="design">Design</option>
+                            <option value="language">Language and Communication Skills</option>
+                            <option value="music">Music</option>
+                            <option value="sports">Sports</option>
+                            <option value="practical">Practical Skills</option>
+                            <option value="writing">Writing/Editing</option>
+                            <option value="community">Community and social impact skills</option>
+                            <option value="creative">Creative and Media Skills</option>
+                            <option value="business">Business and Entrepreneurship</option>
+                            <option value="digital">Digital and Productivity Tools</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <select id="typeFilter">
+                            <option value="">All Types</option>
+                            <option value="offer">Offering Help</option>
+                            <option value="request">Requesting Help</option>
+                        </select>
+                        <input type="text" id="searchInput" placeholder="Search skills...">
+                    </div>
+                </div>
+
+                <div id="skillsGrid" class="skills-grid">
+                    <!-- Skills will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="section">
+                <div class="section-header">
+                    <h2>MY SKILLS PROFILE</h2>
+                </div>
+                
+                <div class="profile-container">
+                    <div class="profile-form">
+                        <h3>Update Profile</h3>
+                        <form id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="userName">Full Name:</label>
+                                    <input type="text" id="userName" name="userName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="userCourse">Course/Program:</label>
+                                    <input type="text" id="userCourse" name="userCourse" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userEmail">Email:</label>
+                                <input type="email" id="userEmail" name="userEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="userPhone">Phone (optional):</label>
+                                <input type="tel" id="userPhone" name="userPhone">
+                            </div>
+
+                            <div class="skills-section">
+                                <h4>Skills I Can Offer</h4>
+                                <div id="offeredSkills" class="skills-list">
+                                    <!-- Offered skills will be added here -->
+                                </div>
+                                <div class="add-skill">
+                                    <input type="text" id="newOfferSkill" placeholder="Enter a skill you can offer">
+                                    <select id="newOfferCategory">
+                                        <option value="tutoring">Tutoring</option>
+                                        <option value="tech">Tech Support</option>
+                                        <option value="design">Design</option>
+                                        <option value="language">Language and Communication Skills</option>
+                                        <option value="music">Music</option>
+                                        <option value="sports">Sports</option>
+                                        <option value="practical">Practical Skills</option>
+                                        <option value="writing">Writing/Editing</option>
+                                        <option value="community">Community and social impact skills</option>
+                                        <option value="creative">Creative and Media Skills</option>
+                                        <option value="business">Business and Entrepreneurship</option>
+                                        <option value="digital">Digital and Productivity Tools</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <button type="button" onclick="addOfferedSkill()" class="btn-small">Add</button>
+                                </div>
+                            </div>
+
+                            <div class="skills-section">
+                                <h4>Skills I Need Help With</h4>
+                                <div id="requestedSkills" class="skills-list">
+                                    <!-- Requested skills will be added here -->
+                                </div>
+                                <div class="add-skill">
+                                    <input type="text" id="newRequestSkill" placeholder="Enter a skill you need help with">
+                                    <select id="newRequestCategory">
+                                        <option value="tutoring">Tutoring</option>
+                                        <option value="tech">Tech Support</option>
+                                        <option value="design">Design</option>
+                                        <option value="language">Language and Communication Skills</option>
+                                        <option value="music">Music</option>
+                                        <option value="sports">Sports</option>
+                                        <option value="practical">Practical Skills</option>
+                                        <option value="writing">Writing/Editing</option>
+                                        <option value="community">Community and social impact skills</option>
+                                        <option value="creative">Creative and Media Skills</option>
+                                        <option value="business">Business and Entrepreneurship</option>
+                                        <option value="digital">Digital and Productivity Tools</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <button type="button" onclick="addRequestedSkill()" class="btn-small">Add</button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+
+                    <div class="profile-preview">
+                        <h3>Profile Preview</h3>
+                        <div id="profileCard" class="profile-card">
+                            <!-- Profile preview will be updated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messages Section -->
+                <div class="messages-section">
+                    <h3>My Messages</h3>
+                    <div class="messages-tabs">
+                        <button class="messages-tab active" onclick="showMessages('received')">Received Messages</button>
+                        <button class="messages-tab" onclick="showMessages('sent')">Sent Messages</button>
+                    </div>
+                    <div id="receivedMessages" class="messages-list">
+                        <!-- Received messages will be populated here -->
+                    </div>
+                    <div id="sentMessages" class="messages-list hidden">
+                        <!-- Sent messages will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="section">
+                <div class="about-container">
+                    <div class="university-info">
+                        <div class="info-card">
+                            <h3>About The App</h3>
+                            <p>The Muni University Students Skills Exchange is an interactive app designed to help students share knowledge, learn new skills, and collaborate beyond the classroom.
+                            It connects students who have valuable skills with those who wish to learn them — creating a community of learning, creativity, and innovation.
+                            Through this platform, students can teach, learn, and grow together in areas such as technology, entrepreneurship, communication, creativity, and personal development.
+                            Our goal is to promote peer learning, self-improvement, and teamwork, empowering every student to become both a learner and a teacher.</p>
+                        </div>
+                        <div class="info-card">
+                            <h3>Location Of Muni University</h3>
+                            <p>Muni University is located in Arua District, 5km North-East of Arua City, in the North-Western part of Uganda.</p>
+                        </div> 
+                        <div class="info-card">
+                            <h3>Contact</h3>
+                            <p>P.O. Box 725, Arua, Uganda<br>
+                            Email: info@muni.ac.ug<br>
+                            Phone: +256 476 420 312</p>
+                        </div>
+                    </div>
+
+                    <div class="developers-section">
+                        <h3>Project Developers</h3>
+                        <div class="developers-grid">
+                            <div class="developer-card">
+                                
+                                <h4>Atimaku Gladys</h4>
+                                <p>atimakugladys4@gmail.com</p>
+                                <p>Bachelor of Information Technology,Year 1</p>
+                            </div>
+                            <div class="developer-card">
+                                
+                                <h4>Mungufeni Dan</h4>
+                                <p>mungufenidan3@gmail.com</p>
+                                <p>Bachelor of Information Technology,Year 1</p>
+                            </div>
+                            <div class="developer-card">
+                                
+                                <h4>Anviko Grace</h4>
+                                <p>anvikograce5@gmail.com</p>
+                                <p>Bachelor of Information Technology,Year 1</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Contact Modal -->
+        <div id="contactModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Contact Student</h3>
+                <div id="contactInfo">
+                    <!-- Contact information will be populated here -->
+                </div>
+                <form id="contactForm">
+                    <input type="hidden" id="contactUserId">
+                    <div class="form-group">
+                        <label for="message">Your Message:</label>
+                        <textarea id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
